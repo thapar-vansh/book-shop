@@ -4,7 +4,14 @@ import adminData from './admin.js'
 const router = express.Router()
 
 router.get('/', (req, res, next) => {
-  res.render('shop.pug',{prods: adminData.products,pageTitle: 'Shop', path :'/'})
+  res.render('shop.ejs',{
+    prods: adminData.products,
+    pageTitle: 'Shop',
+    path :'/',
+    hasProducts : adminData.products.length > 0,
+    activeShop :true,
+    productCSS :true
+  })
 })
 
 export default router
