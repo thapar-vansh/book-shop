@@ -1,17 +1,8 @@
 import path from 'path'
 import express from 'express'
-import adminData from './admin.js'
+import productsControllers from '../controllers/products.js'
 const router = express.Router()
 
-router.get('/', (req, res, next) => {
-  res.render('shop.ejs',{
-    prods: adminData.products,
-    pageTitle: 'Shop',
-    path :'/',
-    hasProducts : adminData.products.length > 0,
-    activeShop :true,
-    productCSS :true
-  })
-})
+router.get('/',productsControllers.getProducts)
 
 export default router
