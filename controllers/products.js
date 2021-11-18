@@ -14,19 +14,28 @@ let getAddProduct = (req, res, next) => {
 let postAddProduct = (req, res, next) => {
   products.push({ title: req.body.title })
   res.redirect('/')
-} 
+}
 
 let getProducts = (req, res, next) => {
   res.render('shop.ejs', {
     prods: products,
     pageTitle: 'Shop',
     path: '/',
-    formCSS : true,
+    formCSS: true,
     activeShop: true,
     productCSS: true,
   })
 }
- 
-export default {getAddProduct : getAddProduct,
-  postAddProduct : postAddProduct,
-  getProducts : getProducts}
+
+let get404 = (req, res, next) => {
+  res
+    .status(404)
+    .render('404.ejs', { pageTitle: 'Page not found', path: 'Error' })
+}
+
+export default {
+  getAddProduct: getAddProduct,
+  postAddProduct: postAddProduct,
+  getProducts: getProducts,
+  get404: get404,
+}
