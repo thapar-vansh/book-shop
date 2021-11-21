@@ -1,5 +1,5 @@
-import adminRoutes from '../routes/admin.js'
-const products = []
+import Product from '../models/product.js'
+
 let getAddProduct = (req, res, next) => {
   res.render('add-product.ejs', {
     pageTitle: 'Add Product',
@@ -12,18 +12,21 @@ let getAddProduct = (req, res, next) => {
 }
 
 let postAddProduct = (req, res, next) => {
-  products.push({ title: req.body.title })
+  const product = new Product(req.body.title)
+  product.save()
   res.redirect('/')
 }
 
 let getProducts = (req, res, next) => {
-  res.render('shop.ejs', {
-    prods: products,
-    pageTitle: 'Shop',
-    path: '/',
-    formCSS: true,
-    activeShop: true,
-    productCSS: true,
+  Product.fetchAll((products) => {
+    res.render('shop.ejs', {
+      prods: products,
+      pageTitle: 'Shop',
+      path: '/',
+      formCSS: true,
+      activeShop: true,
+      productCSS: true,
+    })
   })
 }
 
