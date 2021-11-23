@@ -15,19 +15,20 @@
                                     </h1>
                                 </header>
                                 <div class="card__image">
-                                    <img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2Fb%2Fb6%2FGutenberg_Bible%252C_Lenox_Copy%252C_New_York_Public_Library%252C_2009._Pic_01.jpg%2F447px-Gutenberg_Bible%252C_Lenox_Copy%252C_New_York_Public_Library%252C_2009._Pic_01.jpg&imgrefurl=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FBook&5tbnid=H_C2tEj6QySjmM&vet=12ahUKEwiwtujsuPTzAhUUn0sFHcNUB3wQMygBegUIARDMAQ..i&docid=9dPTCh_caY1RiM&w=447&h=279&q=book&ved=2ahUKEwiwtujsuPTzAhUUn0sFHcNUB3wQMygBegUIARDMAQ"
-                                        alt="A book">
+                                    <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
                                 </div>
                                 <div class=card__content>
-                                    <h2 class="product__price">$19.99</h2>
+                                    <h2 class="product__price">$<%= product.price %>
+                                    </h2>
 
                                     <p class="product__description">
-                                        History book
+                                        <%= product.description %>
                                 </div>
                                 <div class="card__actions">
-                                    <button class "btn">
-                                        Add to cart
-                                    </button>
+                                    <a href="/products/<%= product.id %>" class = "btn">Details</a>
+                                    <form action="/add-to-cart" method="POST">
+                                        <button class = "btn">Add to cart</button>
+                                    </form>
                                 </div>
                             </article>
                             <% } %>
