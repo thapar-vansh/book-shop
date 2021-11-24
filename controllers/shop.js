@@ -23,6 +23,7 @@ let getProducts = (req, res, next) => {
 let getProduct = (req, res, next) => {
   const prodId = req.params.productId
   Product.findById(prodId, (product) => {
+    console.log(product)
     res.render('shop/product-detail.ejs', {
       product: product,
       pageTitle: product.title,
@@ -36,6 +37,12 @@ let getCart = (req, res, next) => {
     path: '/cart',
     pageTitle: 'Your Cart',
   })
+}
+
+let postCart = (req, res, next) => {
+  const prodId = req.body.productId
+  console.log(prodId)
+  res.redirect('/cart')
 }
 
 let getOrders = (req, res, next) => {
@@ -56,6 +63,7 @@ export default {
   getIndex: getIndex,
   getProducts: getProducts,
   getCart: getCart,
+  postCart: postCart,
   getCheckout: getCheckout,
   getOrders: getOrders,
   getProduct: getProduct,
