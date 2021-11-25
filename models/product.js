@@ -1,6 +1,5 @@
 import path from 'path'
 import fs from 'fs'
-import { get } from 'https'
 
 const p = path.resolve('data/products.json')
 fs.readFile(p, (err, fileContent) => {
@@ -20,11 +19,11 @@ const getProductsFromFile = (cb) => {
 
 const products = []
 class Product {
-  constructor(title, imageUrl, description, price) {
+  constructor(title, imageUrl,price, description) {
     this.title = title
     this.imageUrl = imageUrl
-    this.description = description
     this.price = price
+    this.description = description
   }
   save() {
     this.id = Math.random().toString()
