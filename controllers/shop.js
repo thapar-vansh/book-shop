@@ -1,16 +1,6 @@
 import Product from '../models/product.js'
 import Cart from '../models/cart.js'
 
-let getIndex = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('shop/index.ejs', {
-      prods: products,
-      pageTitle: 'Shop',
-      path: '/',
-    })
-  })
-}
-
 let getProducts = (req, res, next) => {
   Product.fetchAll((products) => {
     res.render('shop/product-list.ejs', {
@@ -33,12 +23,35 @@ let getProduct = (req, res, next) => {
   })
 }
 
-let getCart = (req, res, next) => {
-  res.render('shop/cart.ejs', {
-    path: '/cart',
-    pageTitle: 'Your Cart',
+let getIndex = (req, res, next) => {
+  Product.fetchAll((products) => {
+    res.render('shop/index.ejs', {
+      prods: products,
+      pageTitle: 'Shop',
+      path: '/',
+    })
   })
 }
+
+let getCart = (req, res, next) =>{
+  Cart.getCart(cart =>{
+    Product.fetchAll(products =>{ 
+      const cartProducts = []
+      for (product of products){
+        const cartProductData = cart.product.find(prod => prod.id === product.id)
+        if(cartProductData) {
+          cartProducts.push({productData: product, qty: cartProductData.qty})
+        }
+      }
+      res.render('shop/cart.ejs', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products: cartProducts
+      })
+    })
+  })
+}
+
 
 let postCart = (req, res, next) => {
   const prodId = req.body.productId

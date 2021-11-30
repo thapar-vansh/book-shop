@@ -15,7 +15,9 @@ app.use(cors({
     'origin': '*',
     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
     'preflightContinue': false
-  }))
+}))
+
+app.use(express.static('public'))  
 
 app.set('view engine', 'ejs')
 app.set('views', 'views')
