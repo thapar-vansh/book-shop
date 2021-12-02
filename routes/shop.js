@@ -1,5 +1,6 @@
 import express from 'express'
 import shopControllers from '../controllers/shop.js'
+
 const router = express.Router()
 
 router.get('/', shopControllers.getIndex)

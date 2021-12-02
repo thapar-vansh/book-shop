@@ -2,8 +2,6 @@ import path from 'path'
 import fs from 'fs'
 import Cart from './cart.js'
 
-const p = path.resolve('data/products.json')
-
 const getProductsFromFile = (cb) => {
   const p = path.resolve('data/products.json')
   fs.readFile(p, (err, fileContent) => {
@@ -25,6 +23,7 @@ class Product {
   }
 
   save() {
+    const p = path.resolve('data/products.json')
     getProductsFromFile((products) => {
       if (this.id) {
         const existingProductIndex = products.findIndex(
@@ -46,6 +45,7 @@ class Product {
   }
 
   static deleteById(id) {
+    const p = path.resolve('data/products.json')
     getProductsFromFile((products) => {
       const product = products.find((prod) => prod.id === id)
       const updatedProducts = products.filter((prod) => prod.id !== id)

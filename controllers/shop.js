@@ -33,32 +33,44 @@ let getIndex = (req, res, next) => {
   })
 }
 
-let getCart = (req, res, next) =>{
-  Cart.getCart(cart =>{
-    Product.fetchAll(products =>{ 
+let getCart = (req, res, next) => {
+  Cart.getCart((cart) => {
+    Product.fetchAll((products) => {
       const cartProducts = []
-      for (product of products){
-        const cartProductData = cart.product.find(prod => prod.id === product.id)
-        if(cartProductData) {
-          cartProducts.push({productData: product, qty: cartProductData.qty})
+      let product = req.body.productId
+      console.log(product)
+      for (product of products) {
+        const cartProductData = cart.products.find(
+          (prod) => prod.id === product.id
+        )
+        if (cartProductData) {
+          cartProducts.push({ productData: product, qty: cartProductData.qty })
         }
       }
       res.render('shop/cart.ejs', {
         path: '/cart',
         pageTitle: 'Your Cart',
-        products: cartProducts
+        products: cartProducts,
       })
     })
   })
 }
 
-
 let postCart = (req, res, next) => {
   const prodId = req.body.productId
   Product.findById(prodId, (product) => {
+    console.log(prodId)
     Cart.addProduct(prodId, product.price)
   })
   res.redirect('/cart')
+}
+
+let postCartDeleteProduct = (req, res, next) => {
+  const prodId = req.body.productId
+  Product.findById(prodId, (product) => {
+    Cart.deleteProduct(prodId, product.price)
+    res.redirect('/cart')
+  })
 }
 
 let getOrders = (req, res, next) => {
@@ -83,4 +95,5 @@ export default {
   getCheckout: getCheckout,
   getOrders: getOrders,
   getProduct: getProduct,
+  postCartDeleteProduct: postCartDeleteProduct,
 }

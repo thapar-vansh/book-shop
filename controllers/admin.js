@@ -76,5 +76,5 @@ export default {
   getProducts: getProducts,
   getEditProduct: getEditProduct,
   postEditProduct: postEditProduct,
-  postDeleteProduct: postDeleteProduct
+  postDeleteProduct: postDeleteProduct,
 }
