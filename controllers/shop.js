@@ -38,7 +38,6 @@ let getCart = (req, res, next) => {
     Product.fetchAll((products) => {
       const cartProducts = []
       let product = req.body.productId
-      console.log(product)
       for (product of products) {
         const cartProductData = cart.products.find(
           (prod) => prod.id === product.id
