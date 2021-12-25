@@ -2,12 +2,16 @@ import Product from '../models/product.js'
 import Cart from '../models/cart.js'
 
 let getProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('shop/product-list.ejs', {
-      prods: products,
+  Product.fetchAll()
+  .then((result) => {
+      res.render('shop/product-list.ejs', {
+      prods: result.rows,
       pageTitle: 'All products',
       path: '/products',
     })
+  })
+  .catch((err) => {
+    console.log(err)
   })
 }
 
@@ -24,13 +28,17 @@ let getProduct = (req, res, next) => {
 }
 
 let getIndex = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('shop/index.ejs', {
-      prods: products,
-      pageTitle: 'Shop',
-      path: '/',
+  Product.fetchAll()
+    .then((result, fieldData) => {
+      res.render('shop/index.ejs', {
+        prods: result.rows,
+        pageTitle: 'Shop',
+        path: '/',
+      })
     })
-  })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 let getCart = (req, res, next) => {
