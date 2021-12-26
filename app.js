@@ -5,6 +5,7 @@ import cors from 'cors'
 
 const app = express()
 
+import  sequelize  from "./util/database.js"
 import adminRoutes from './routes/admin.js'
 import shopRoutes from './routes/shop.js'
 import errController from './controllers/products.js'
@@ -30,5 +31,9 @@ app.use(express.static(path.resolve('public')))
 app.use('/admin', adminRoutes)
 app.use(shopRoutes)
 app.use(errController.get404)
+
+sequelize.sync()
+.then(result => console.log('created product'))
+.catch(err => console.log(err))
 
 app.listen(3000)

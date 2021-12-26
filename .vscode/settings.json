@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 500,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "book-shop-connection",
+            "database": "book-shop",
+            "username": "postgres"
+        }
+    ]
+}

@@ -1,26 +1,4 @@
-import pg from 'pg'
-const { Pool } = pg
+import { Sequelize } from 'sequelize'
+const sequelize = new Sequelize('book-shop','postgres','root',{dialect:'postgres',host:'localhost'})
 
-const CONFIG = {
-  user: 'postgres',
-  password: 'root',
-  host: 'localhost',
-  port: 5432,
-  database: 'book-shop',
-  max: 10,
-}
-
-const pool = new Pool(CONFIG)
-
-export default {
-  query: function query(text, params) {
-    return new Promise((resolve, reject) => {
-      try {
-        const result = pool.query(text, params)
-        return resolve(result)
-      } catch (error) {
-        return reject(error)
-      }
-    })
-  }
-}
+export default sequelize

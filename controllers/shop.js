@@ -2,10 +2,10 @@ import Product from '../models/product.js'
 import Cart from '../models/cart.js'
 
 let getProducts = (req, res, next) => {
-  Product.fetchAll()
-  .then((result) => {
+  Product.findAll()
+  .then((product) => {
       res.render('shop/product-list.ejs', {
-      prods: result.rows,
+      prods: product,
       pageTitle: 'All products',
       path: '/products',
     })
@@ -17,21 +17,22 @@ let getProducts = (req, res, next) => {
 
 let getProduct = (req, res, next) => {
   const prodId = req.params.productId
-  Product.findById(prodId, (product) => {
-    console.log(product)
+  Product.findAll({where: {id : prodId}})       //can also use finBYPk()
+  .then((product)=>{
     res.render('shop/product-detail.ejs', {
-      product: product,
-      pageTitle: product.title,
+      product: product[0],
+      pageTitle: product[0].title,
       path: '/products',
     })
   })
+  .catch(err => console.log(err))
 }
 
 let getIndex = (req, res, next) => {
-  Product.fetchAll()
-    .then((result, fieldData) => {
+  Product.findAll()
+    .then((product) => {
       res.render('shop/index.ejs', {
-        prods: result.rows,
+        prods: product,
         pageTitle: 'Shop',
         path: '/',
       })
