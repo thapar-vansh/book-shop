@@ -1,4 +1,6 @@
 import Product from '../models/product.js'
+import User from '../models/user.js'
+
 
 let getAddProduct = (req, res, next) => {
   res.render('admin/edit-product.ejs', {
@@ -13,17 +15,19 @@ let postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl
   const price = req.body.price
   const description = req.body.description
+  req.user = User.findByPk(2)
   Product.create({
     title: title,
     price: price,
     imageUrl: imageUrl,
-    description: description,
+    description: description, 
+    userId: req.user.id
   })
-    .then((result) => {
-      console.log('CREATED PRODUCT')
-      res.redirect('/admin/products')
-    })
-    .catch((err) => console.log(err))
+  .then((result) => {
+    console.log('CREATED PRODUCT')
+    res.redirect('/admin/products')
+  })
+  .catch((err) => console.log(err))
 }
 
 let getEditProduct = (req, res, next) => {
@@ -32,6 +36,7 @@ let getEditProduct = (req, res, next) => {
     return res.redirect('/')
   }
   const prodId = req.params.productId
+
   Product.findAll({ where: { id: prodId } })
     .then((product) => {
       if (!product) {
