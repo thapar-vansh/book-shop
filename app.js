@@ -1,11 +1,11 @@
 import path from 'path'
-import express, { query } from 'express'
+import express from 'express'
 import bodyParser from 'body-parser'
 
 import errController from './controllers/products.js'
-import sequelize from './util/database.js'
-import Product from './models/product.js'
-import User from './models/user.js'
+import mongoConnect from './util/database.js'
+
+
 //import cors from 'cors'
 
 const app = express()
@@ -14,7 +14,8 @@ app.set('view engine', 'ejs')
 app.set('views', 'views')
 
 import adminRoutes from './routes/admin.js'
-import shopRoutes from './routes/shop.js'
+// import shopRoutes from './routes/shop.js'
+// import client from 'pg/lib/native/client'
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -34,41 +35,24 @@ app.use(express.static(path.resolve('public')))
 // sequelize.sync({force:true})        #to override the changes
 
 app.use((res, req, next) => {
-  User.findByPk(2)
-    .then((user) => {
-      req.user = user
-      //console.log(user)
-      next()
-    })
-    .catch((err) => console.log(err))
+  // User.findByPk(2)
+  //   .then((user) => {
+  //     req.user = user
+  //     //console.log(user)
+  //     next()
+  //   })
+  //   .catch((err) => console.log(err))
+  next()
 })
 
 app.use('/admin', adminRoutes)
-app.use(shopRoutes)
+// app.use(shopRoutes)
 
 app.use(errController.get404)
 
-Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' })
-User.hasMany(Product)
-
-sequelize
-.sync()
-.then((result) => {
-  return User.findByPk(2)
-})
-.then((user) => {
-  if (!user) {
-    return User.create({ name: 'VANSH', email: 'thapar.vansh@outlook.com' })
-  }
-  return user
-})
-.then((user) => {
-  //console.log(user)
+mongoConnect.mongoConnect(()=>{
   app.listen(3000)
 })
-.catch((err) => console.log(err))
-
-
 
 
 
