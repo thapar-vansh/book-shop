@@ -14,8 +14,8 @@ app.set('view engine', 'ejs')
 app.set('views', 'views')
 
 import adminRoutes from './routes/admin.js'
-// import shopRoutes from './routes/shop.js'
-// import client from 'pg/lib/native/client'
+//import shopRoutes from './routes/shop.js'
+
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
