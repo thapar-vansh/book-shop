@@ -14,7 +14,7 @@ app.set('view engine', 'ejs')
 app.set('views', 'views')
 
 import adminRoutes from './routes/admin.js'
-//import shopRoutes from './routes/shop.js'
+import shopRoutes from './routes/shop.js'
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -46,7 +46,7 @@ app.use((res, req, next) => {
 })
 
 app.use('/admin', adminRoutes)
-// app.use(shopRoutes)
+app.use(shopRoutes)
 
 app.use(errController.get404)
 
