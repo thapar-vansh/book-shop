@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 
 import errController from './controllers/products.js'
 import mongoConnect from './util/database.js'
-
+import User from './models/user.js'
 
 //import cors from 'cors'
 
@@ -35,13 +35,13 @@ app.use(express.static(path.resolve('public')))
 // sequelize.sync({force:true})        #to override the changes
 
 app.use((res, req, next) => {
-  // User.findByPk(2)
-  //   .then((user) => {
-  //     req.user = user
-  //     //console.log(user)
-  //     next()
-  //   })
-  //   .catch((err) => console.log(err))
+  User.findByPk("630dc1285589031bde86e87f")
+    .then((user) => {
+      req.user = user
+      // console.log(user)
+      next()
+    })
+    .catch((err) => console.log(err))
   next()
 })
 

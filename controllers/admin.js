@@ -1,10 +1,6 @@
 import Product from '../models/product.js'
 //import User from '../models/user.js'
 
-import mongodb from 'mongodb'
-
-const ObjectId = mongodb.ObjectId
-
 let getAddProduct = (req, res, next) => {
   res.render('admin/edit-product.ejs', {
     pageTitle: 'Add Product',
@@ -58,10 +54,10 @@ let postEditProduct = (req, res, next) => {
   const updatedDesc = req.body.description
   const product = new Product(
     updatedTitle,
-    updatedImageUrl,
     updatedPrice,
     updatedDesc, 
-    new ObjectId(prodId), 
+    updatedImageUrl,
+    prodId, 
   )
   product
     .save()
@@ -86,11 +82,8 @@ let getProducts = (req, res, next) => {
 
 let postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId
-  Product.findById(prodId) //also by Product.destroy({where:})
-    .then((product) => {
-      return product.destroy()
-    })
-    .then((result) => {
+  Product.deleteById(prodId) //also by Product.destroy({where:})
+    .then(() => {
       console.log('DESTROYED PRODUCT')
       res.redirect('/admin/products')
     })

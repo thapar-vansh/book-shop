@@ -1,12 +1,12 @@
-import mongodb, { ObjectId } from 'mongodb'
+import { ObjectId } from 'mongodb'
 import getDb from '../util/database.js'
 class Product {
-  constructor(title, price, description, imageUrl, _id) {
+  constructor(title, price, description, imageUrl, id) {
     this.title = title
     this.price = price
     this.description = description
     this.imageUrl = imageUrl
-    this._id = _id
+    this._id = id ? new ObjectId(id):null
 
   }
 
@@ -16,7 +16,7 @@ class Product {
     if (this._id){
       dbOp = db
       .collection('products')
-      .updateOne({_id: new mongodb.ObjectId(this._id)}, {$set: this})
+      .updateOne({_id:this._id}, {$set: this})
     }
     else{
       dbOp = db
@@ -55,6 +55,17 @@ class Product {
     .then((product)=>{
       console.log(product)
       return product
+    })
+    .catch(err=>console.log(err))
+  }
+
+  static deleteById(prodId){
+    const db = getDb.getDb()
+    return db
+    .collection('products')
+    .deleteOne({_id : new ObjectId(prodId)})
+    .then((result)=>{
+      console.log('Deleted')
     })
     .catch(err=>console.log(err))
   }
